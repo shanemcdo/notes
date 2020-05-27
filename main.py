@@ -1,5 +1,5 @@
+import os
 from sys import argv
-from os import system
 
 NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\python\\notes\\note_folder\\"
 
@@ -32,8 +32,12 @@ def open_file(file_name, folder_name) -> None:
     file_path = NOTE_FOLDER_PATH
     if folder_name != None:
         file_path += folder_name + "\\"
+        if not os.path.isdir(file_path):
+            raise(Exception("Folder name already in use by another file"))
+        if not os.path.exists(file_path):
+            os.mkdir(file_path)
     file_path += file_name
-    system("gvim " + file_path)
+    os.system("gvim " + file_path)
 
 def main():
     try:
