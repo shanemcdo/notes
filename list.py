@@ -3,6 +3,9 @@ from sys import argv
 from main import NOTE_FOLDER_PATH
 
 def parse_argv() -> None or "folder_name":
+    """ Parse argv into something more usable
+    :returns: name of the folder to be searched or an empty string
+    """
     _ = argv.pop(0)
     length = len(argv)
     if length == 0:
