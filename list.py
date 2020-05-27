@@ -11,7 +11,6 @@ def parse_argv() -> None or "folder_name":
         raise(Exception("Too many arguments"))
     return argv[0]
 
-
 def main():
     try:
         folder_name = parse_argv()
