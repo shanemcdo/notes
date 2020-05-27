@@ -32,9 +32,10 @@ def open_file(file_name, folder_name) -> None:
     file_path = NOTE_FOLDER_PATH
     if folder_name != None:
         file_path += folder_name + "\\"
-        if not os.path.isdir(file_path):
-            raise(Exception("Folder name already in use by another file"))
-        if not os.path.exists(file_path):
+        if os.path.exists(file_path):
+            if not os.path.isdir(file_path):
+                raise(Exception("Folder name already in use by another file"))
+        else:
             os.mkdir(file_path)
     file_path += file_name
     os.system("gvim " + file_path)
