@@ -2,9 +2,9 @@ import os
 from sys import argv
 from main import NOTE_FOLDER_PATH
 
-def parse_argv() -> ("folder_name", "rm_args"):
+def parse_argv() -> ("file_name", "rm_args"):
     """ Parse argv into something more usable
-    :returns: a tuple of folder name and args to pass into rm command
+    :returns: a tuple of file name and args to pass into rm command
     """
     _ = argv.pop(0)
     rm_args = ""
@@ -17,17 +17,24 @@ def parse_argv() -> ("folder_name", "rm_args"):
         raise(Exception("Too many arguments"))
     elif len(argv) < 1:
         raise(Exception("Too few arguments"))
-    return argv[0], rm_args
+    file_name = argv[0]
+    return file_name, rm_args
 
-def remove_file(folder_name, rm_args) -> None:
-    pass
+def remove_file(file_name, rm_args) -> None:
+    """ remove file selected with rm_args
+    :file_name: file to remove 
+    :rm_args: args to pass to rm
+    """
+    path = NOTE_FOLDER_PATH + file_name
+    os.system("rm " + path + " " + rm_args)
 
 def main():
     try:
-        folder_name, rm_args = parse_argv()
+        file_name, rm_args = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
         return
+    remove_file(file_name, rm_args)
 
 
 if __name__ == "__main__":
