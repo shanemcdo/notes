@@ -1,4 +1,5 @@
 import os
+import re
 from sys import argv
 
 NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\python\\notes\\note_folder\\"
@@ -21,8 +22,8 @@ def parse_argv() -> ("file_name", "folder_name"):
         file_name, folder_name = argv
     if '.' not in file_name:
         file_name += ".txt"
-    if "\\" in file_name:
-        lst = file_name.split("\\")
+    if "\\" in file_name or "/" in file_name:
+        lst = re.split(r" |\\|/", file_name)
         print(lst)
         file_name = lst.pop(-1)
         print(lst)
