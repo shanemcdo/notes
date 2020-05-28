@@ -21,6 +21,16 @@ def parse_argv() -> ("file_name", "folder_name"):
         file_name, folder_name = argv
     if '.' not in file_name:
         file_name += ".txt"
+    if "\\" in file_name:
+        lst = file_name.split("\\")
+        print(lst)
+        file_name = lst.pop(-1)
+        print(lst)
+        if folder_name != None:
+            folder_name += "\\" + "\\".join(lst)
+        else:
+            folder_name = "\\".join(lst)
+    print(file_name, folder_name)
     return file_name, folder_name
 
 def open_file(file_name, folder_name) -> None:
@@ -36,7 +46,7 @@ def open_file(file_name, folder_name) -> None:
             if not os.path.isdir(file_path):
                 raise(Exception("Folder name already in use by another file"))
         else:
-            os.mkdir(file_path)
+            os.makedirs(file_path)
     file_path += file_name
     os.system("gvim " + file_path)
 
@@ -46,7 +56,7 @@ def main():
     except Exception as e:
         print("Error: " + str(e))
         return
-    open_file(file_name, folder_name)
+    # open_file(file_name, folder_name)
 
 if __name__ == "__main__":
     main()
