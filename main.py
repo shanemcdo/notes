@@ -24,14 +24,11 @@ def parse_argv() -> ("file_name", "folder_name"):
         file_name += ".txt"
     if "\\" in file_name or "/" in file_name:
         lst = re.split(r" |\\|/", file_name)
-        print(lst)
         file_name = lst.pop(-1)
-        print(lst)
         if folder_name != None:
             folder_name += "\\" + "\\".join(lst)
         else:
             folder_name = "\\".join(lst)
-    print(file_name, folder_name)
     return file_name, folder_name
 
 def open_file(file_name, folder_name) -> None:
@@ -57,7 +54,7 @@ def main():
     except Exception as e:
         print("Error: " + str(e))
         return
-    # open_file(file_name, folder_name)
+    open_file(file_name, folder_name)
 
 if __name__ == "__main__":
     main()
