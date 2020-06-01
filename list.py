@@ -14,11 +14,19 @@ def parse_argv() -> None or "folder_name":
         raise(Exception("Too many arguments"))
     return argv[0]
 
+def print_usage() -> None:
+    """Print the correct usage of the command"""
+    print(
+            "Usage of command:\n"+
+            "\tnls {file path(optional)}\n"
+        )
+
 def main():
     try:
         folder_name = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
+        print_usage()
         return
     os.system('ls ' + NOTE_FOLDER_PATH + "\\" + folder_name)
 
