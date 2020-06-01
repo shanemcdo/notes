@@ -28,6 +28,14 @@ def remove_file(file_name, rm_args) -> None:
     path = NOTE_FOLDER_PATH + file_name
     os.system("rm " + path + " " + rm_args)
 
+def print_usage() -> None:
+    """Print the correct usage of the command"""
+    print(
+            "Usage of command:\n"+
+            "\tnd {file path} {flags(optional)}\n" +
+            "\t\tSee rm --help for info on flags"
+        )
+
 def main():
     try:
         file_name, rm_args = parse_argv()
