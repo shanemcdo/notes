@@ -48,11 +48,19 @@ def open_file(file_name, folder_name) -> None:
     file_path += file_name
     os.system("gvim " + file_path)
 
+def print_usage() -> None:
+    """Print the correct usage of the command"""
+    print(
+            "Usage of command:\n"+
+            "\tnote {file path} {folder(optional)}"
+        )
+
 def main():
     try:
         file_name, folder_name = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
+        print_usage()
         return
     open_file(file_name, folder_name)
 
