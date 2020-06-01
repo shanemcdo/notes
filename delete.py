@@ -41,6 +41,7 @@ def main():
         file_name, rm_args = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
+        print_usage()
         return
     remove_file(file_name, rm_args)
 
