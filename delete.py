@@ -26,7 +26,10 @@ def remove_file(file_name, rm_args) -> None:
     :rm_args: args to pass to rm
     """
     path = NOTE_FOLDER_PATH + file_name
+    if not os.path.exists(path):
+        path += ".txt"
     os.system("rm " + path + " " + rm_args)
+
 
 def print_usage() -> None:
     """Print the correct usage of the command"""
