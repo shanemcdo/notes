@@ -17,39 +17,41 @@ def parse_argv() -> ("relative_path", "gvim_flags"):
         argv.remove(flag)
     gvim_flags = " ".join(gvim_flags)
     length = len(argv)
-    if length > 1:
-        raise(Exception("Too many arguments"))
-    elif length < 1:
+    if length < 1:
         raise(Exception("Too few arguments"))
-    elif length == 1:
-        relative_path = argv[0]
-    if '.' not in relative_path:
-        relative_path += ".txt"
-    return relative_path, gvim_flags
+    relative_paths = []
+    for arg in argv:
+        if '.' not in arg:
+            arg += ".txt"
+        relative_paths.append(arg)
+    return relative_paths, gvim_flags
 
-def open_file(relative_path: str, gvim_flags: str) -> None:
+def open_file(relative_paths: list, gvim_flags: str) -> None:
     """ Opens the file in gvim
-    :relative_path: 
+    :relative_path: a list of relative paths
     :gvim_flags: flags to pass to gvim directly
     :returns: None
     """
-    if "\\" in relative_path or "/" in relative_path:
-        lst = re.split(r" |\\|/", relative_path)
-        file_name = lst.pop(-1)
-        folder_name = "\\".join(lst) + "\\"
-    else:
-        folder_name = ""
-        file_name = relative_path
-    file_path = NOTE_FOLDER_PATH
-    if folder_name != "":
-        file_path += folder_name
-        if os.path.exists(file_path):
-            if not os.path.isdir(file_path):
-                raise(Exception("Folder name already in use by another file"))
+    file_paths = []
+    for relative_path in relative_paths:
+        if "\\" in relative_path or "/" in relative_path:
+            lst = re.split(r" |\\|/", relative_path)
+            file_name = lst.pop(-1)
+            folder_name = "\\".join(lst) + "\\"
         else:
-            os.makedirs(file_path)
-    file_path += file_name
-    os.system("gvim " + file_path + " " + gvim_flags)
+            folder_name = ""
+            file_name = relative_path
+        file_path = NOTE_FOLDER_PATH
+        if folder_name != "":
+            file_path += folder_name
+            if os.path.exists(file_path):
+                if not os.path.isdir(file_path):
+                    raise(Exception("Folder name already in use by another file"))
+            else:
+                os.makedirs(file_path)
+        file_path += file_name
+        file_paths.append(file_path)
+    os.system("gvim " + ' '.join(file_paths) + " " + gvim_flags)
 
 def print_usage() -> None:
     """Print the correct usage of the command"""
