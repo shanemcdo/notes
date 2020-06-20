@@ -57,7 +57,8 @@ def print_usage() -> None:
     """Print the correct usage of the command"""
     print(
             "Usage of command:\n" +
-            "\tnote {relative path(s)} {gvim flag(optional)}"
+            "\tnote {relative path(s)} {gvim flag(optional)}" +
+            "\t\tsee vim --help for info on flags"
         )
 
 def main():
