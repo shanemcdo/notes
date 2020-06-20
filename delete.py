@@ -35,7 +35,7 @@ def print_usage() -> None:
     """Print the correct usage of the command"""
     print(
             "Usage of command:\n"+
-            "\tnd {file path} {flags(optional)}\n" +
+            "\tnd {file path(s)} {flags(optional)}\n" +
             "\t\tSee rm --help for info on flags"
         )
 
