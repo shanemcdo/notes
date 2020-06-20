@@ -2,9 +2,9 @@ import os
 from sys import argv
 from main import NOTE_FOLDER_PATH
 
-def parse_argv() -> ("file_name", "rm_args"):
+def parse_argv() -> ("relative_paths", "rm_args"):
     """ Parse argv into something more usable
-    :returns: a tuple of file name and args to pass into rm command
+    :returns: a tuple of a list of relative_paths and args to pass into rm command
     """
     _ = argv.pop(0)
     rm_args = ""
@@ -13,22 +13,25 @@ def parse_argv() -> ("file_name", "rm_args"):
             rm_args += item + " "
     for item in rm_args.split():
         argv.remove(item)
-    if len(argv) > 1:
-        raise(Exception("Too many arguments"))
-    elif len(argv) < 1:
+    if len(argv) < 1:
         raise(Exception("Too few arguments"))
-    file_name = argv[0]
-    return file_name, rm_args
+    relative_paths = []
+    for arg in argv:
+        relative_paths.append(arg)
+    return relative_paths, rm_args
 
-def remove_file(file_name, rm_args) -> None:
+def remove_file(relative_paths, rm_args) -> None:
     """ remove file selected with rm_args
-    :file_name: file to remove 
+    :relative_paths: paths to files to remove 
     :rm_args: args to pass to rm
     """
-    path = NOTE_FOLDER_PATH + file_name
-    if not os.path.exists(path):
-        path += ".txt"
-    os.system("rm " + path + " " + rm_args)
+    paths = []
+    for relative_path in relative_paths:
+        path = NOTE_FOLDER_PATH + relative_path
+        if not os.path.exists(path):
+            path += ".txt"
+        paths.append(path)
+    os.system("rm " + " ".join(paths) + " " + rm_args)
 
 
 def print_usage() -> None:
@@ -41,12 +44,12 @@ def print_usage() -> None:
 
 def main():
     try:
-        file_name, rm_args = parse_argv()
+        relative_paths, rm_args = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
         print_usage()
         return
-    remove_file(file_name, rm_args)
+    remove_file(relative_paths, rm_args)
 
 
 if __name__ == "__main__":
