@@ -48,6 +48,8 @@ def open_file(relative_paths: list, gvim_flags: str, n: int) -> None:
             folder_name = ""
             file_name = relative_path
         file_path = NOTE_FOLDER_PATH
+        if '.' not in file_name:
+            file_name += ".txt"
         if folder_name != "":
             file_path += folder_name
             if os.path.exists(file_path):
@@ -56,14 +58,11 @@ def open_file(relative_paths: list, gvim_flags: str, n: int) -> None:
             else:
                 os.makedirs(file_path)
         file_path += file_name
-        if n != 0 and os.path.exists(file_path):
-            os.system("ROTN " + str(-n) + " -f " + file_path + " -o " + file_path)
         file_paths.append(file_path)
-    p = subprocess.Popen(("gvim " + ' '.join(file_paths) + " " + gvim_flags).split())
-    p.wait()
-    for file_path in file_paths:
-        if n != 0:
-            os.system("ROTN " + str(n) + " -f " + file_path + " -o " + file_path)
+    if n != 0:
+        os.system("ROTNe " + str(n) + " "+ ' '.join(file_paths) + " " + gvim_flags)
+    else:
+        os.system("gvim " + ' '.join(file_paths) + " " + gvim_flags)
 
 
 def print_usage() -> None:
