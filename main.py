@@ -4,27 +4,31 @@ from sys import argv
 
 NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\python\\notes\\note_folder\\"
 
-def parse_argv() -> ("relative_path", "gvim_flags"):
+def parse_argv() -> ("relative_path", "gvim_flags", int):
     """ converts argv into a more usable format
-    :returns: a tuple of the relative path name and the flags for gvim
+    :returns: a tuple of the relative path name and the flags for gvim and the number of rotations to encode
     """
     _ = argv.pop(0)
-    gvim_flags = []
+    relative_paths = []
+    gvim_flags = ""
+    next_arg_is_n = False
+    n = 0
     for arg in argv:
-        if arg.startswith('-'):
-            gvim_flags.append(arg)
-    for flag in gvim_flags:
-        argv.remove(flag)
-    gvim_flags = " ".join(gvim_flags)
-    length = len(argv)
+        if arg == '--rotn':
+            next_arg_is_n = True
+        elif arg.startswith('-'):
+            gvim_flags += arg + " "
+        elif next_arg_is_n:
+            n = int(arg)
+            next_arg_is_n = False
+        else:
+            if '.' not in arg:
+                arg += ".txt"
+            relative_paths.append(arg)
+    length = len(relative_paths)
     if length < 1:
         raise(Exception("Too few arguments"))
-    relative_paths = []
-    for arg in argv:
-        if '.' not in arg:
-            arg += ".txt"
-        relative_paths.append(arg)
-    return relative_paths, gvim_flags
+    return relative_paths, gvim_flags, n
 
 def open_file(relative_paths: list, gvim_flags: str) -> None:
     """ Opens the file in gvim
@@ -57,18 +61,19 @@ def print_usage() -> None:
     """Print the correct usage of the command"""
     print(
             "Usage of command:\n" +
-            "\tnote {relative path(s)} {gvim flag(optional)}\n" +
+            "\tnote {relative path(s)} {gvim flag(optional)}" +
             "\t\tsee vim --help for info on flags"
         )
 
 def main():
     try:
-        relative_path, gvim_flags = parse_argv()
+        # relative_path, gvim_flags, n = parse_argv()
+        print(parse_argv())
     except Exception as e:
         print("Error: " + str(e))
         print_usage()
         return
-    open_file(relative_path, gvim_flags)
+    # open_file(relative_path, gvim_flags)
 
 if __name__ == "__main__":
     main()
