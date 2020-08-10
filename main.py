@@ -62,7 +62,9 @@ def print_usage() -> None:
     print(
             "Usage of command:\n" +
             "\tnote {relative path(s)} {gvim flag(optional)}\n" +
-            "\t\tsee vim --help for info on flags"
+            "\t\tsee vim --help for info on flags\n" +
+            "\t\tMore flags:\n" +
+            "\t\t\t--rotn - next input is how many spaces rotated"
         )
 
 def main():
