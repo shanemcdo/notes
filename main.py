@@ -61,8 +61,9 @@ def open_file(relative_paths: list, gvim_flags: str, n: int) -> None:
         file_paths.append(file_path)
     p = subprocess.Popen(("gvim " + ' '.join(file_paths) + " " + gvim_flags).split())
     p.wait()
-    if n != 0:
-        os.system("ROTN " + str(n) + " -f " + file_path + " -o " + file_path)
+    for file_path in file_paths:
+        if n != 0:
+            os.system("ROTN " + str(n) + " -f " + file_path + " -o " + file_path)
 
 
 def print_usage() -> None:
