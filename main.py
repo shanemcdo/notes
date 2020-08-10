@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 from sys import argv
 
 NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\python\\notes\\note_folder\\"
@@ -30,10 +31,11 @@ def parse_argv() -> ("relative_path", "gvim_flags", int):
         raise(Exception("Too few arguments"))
     return relative_paths, gvim_flags, n
 
-def open_file(relative_paths: list, gvim_flags: str) -> None:
+def open_file(relative_paths: list, gvim_flags: str, n: int) -> None:
     """ Opens the file in gvim
     :relative_path: a list of relative paths
     :gvim_flags: flags to pass to gvim directly
+    :n: spaces to rotate in ROTN
     :returns: None
     """
     file_paths = []
@@ -54,8 +56,14 @@ def open_file(relative_paths: list, gvim_flags: str) -> None:
             else:
                 os.makedirs(file_path)
         file_path += file_name
+        if n != 0 and os.path.exists(file_path):
+            os.system("ROTN " + str(-n) + " -f " + file_path + " -o " + file_path)
         file_paths.append(file_path)
-    os.system("gvim " + ' '.join(file_paths) + " " + gvim_flags)
+    p = subprocess.Popen(("gvim " + ' '.join(file_paths) + " " + gvim_flags).split())
+    p.wait()
+    if n != 0:
+        os.system("ROTN " + str(n) + " -f " + file_path + " -o " + file_path)
+
 
 def print_usage() -> None:
     """Print the correct usage of the command"""
@@ -69,13 +77,12 @@ def print_usage() -> None:
 
 def main():
     try:
-        # relative_path, gvim_flags, n = parse_argv()
-        print(parse_argv())
+        relative_path, gvim_flags, n = parse_argv()
     except Exception as e:
         print("Error: " + str(e))
         print_usage()
         return
-    # open_file(relative_path, gvim_flags)
+    open_file(relative_path, gvim_flags, n)
 
 if __name__ == "__main__":
     main()
