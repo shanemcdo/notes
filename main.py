@@ -3,7 +3,7 @@ import re
 import subprocess
 from sys import argv
 
-NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\python\\notes\\note_folder\\"
+NOTE_FOLDER_PATH = "C:\\Users\\Shane\\Dropbox\\note_folder\\"
 
 def parse_argv() -> ("relative_path", "gvim_flags", int):
     """ converts argv into a more usable format
