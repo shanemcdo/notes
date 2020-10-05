@@ -62,7 +62,7 @@ def open_file(relative_paths: list, gvim_flags: str, n: int) -> None:
     if n != 0:
         os.system("ROTNe " + str(n) + " "+ ' '.join(file_paths) + " " + gvim_flags)
     else:
-        os.system("gvim " + ' '.join(file_paths) + " " + gvim_flags)
+        os.system("start gvim " + ' '.join(file_paths) + " " + gvim_flags)
 
 
 def print_usage() -> None:
