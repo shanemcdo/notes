@@ -30,7 +30,7 @@ def remove_file(relative_paths, rm_args) -> None:
         if not os.path.exists(path):
             path += ".txt"
         paths.append(path)
-    os.system("rm " + " ".join(paths) + " " + rm_args)
+    os.system("rm " + rm_args +  " ".join(paths))
 
 def print_usage() -> None:
     """Print the correct usage of the command"""
