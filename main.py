@@ -10,7 +10,7 @@ EDITOR = os.environ['EDITOR']
 
 def parse_argv() -> ("relative_path", "vim_flags", int):
     """ converts argv into a more usable format
-    :returns: a tuple of the relative path name and the flags for gvim and the number of rotations to encode
+    :returns: a tuple of the relative path name and the flags for vim and the number of rotations to encode
     """
     _ = argv.pop(0)
     relative_paths = []
@@ -35,9 +35,9 @@ def parse_argv() -> ("relative_path", "vim_flags", int):
     return relative_paths, vim_flags, n
 
 def open_file(relative_paths: list, vim_flags: str, n: int) -> None:
-    """ Opens the file in gvim
+    """ Opens the file in vim
     :relative_path: a list of relative paths
-    :vim_flags: flags to pass to gvim directly
+    :vim_flags: flags to pass to vim directly
     :n: spaces to rotate in ROTN
     :returns: None
     """
@@ -63,8 +63,7 @@ def open_file(relative_paths: list, vim_flags: str, n: int) -> None:
         file_path = os.path.join(file_path, file_name)
         file_paths.append(file_path)
     if n != 0:
-        # os.system("ROTNe " + str(n) + " "+ ' '.join(file_paths) + " " + vim_flags)
-        pass
+        os.system(f'rotne {" ". join(file_paths)} {vim_flags}')
     else:
         os.system(f'{EDITOR} {" ". join(file_paths)} {vim_flags}')
 
@@ -72,7 +71,7 @@ def print_usage() -> None:
     """Print the correct usage of the command"""
     print(
             "Usage of command:\n" +
-            "\tnote {relative path(s)} {gvim flag(optional)}\n" +
+            "\tnote {relative path(s)} {vim flag(optional)}\n" +
             "\t\tsee vim --help for info on flags\n" +
             "\t\tMore flags:\n" +
             "\t\t\t--rotn - next input is how many spaces rotated"
