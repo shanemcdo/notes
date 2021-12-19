@@ -1,3 +1,4 @@
+#!/bin/zsh
 import os
 from sys import argv
 from main import NOTE_FOLDER_PATH

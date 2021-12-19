@@ -1,3 +1,4 @@
+#!/bin/zsh
 import os
 import re
 import subprocess
