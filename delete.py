@@ -15,10 +15,7 @@ def parse_argv() -> ("relative_paths", "rm_args"):
         argv.remove(item)
     if len(argv) < 1:
         raise(Exception("Too few arguments"))
-    relative_paths = []
-    for arg in argv:
-        relative_paths.append(arg)
-    return relative_paths, rm_args
+    return [os.path.normpath(arg) for arg in argv], rm_args
 
 def remove_file(relative_paths, rm_args) -> None:
     """ remove file selected with rm_args
@@ -27,12 +24,11 @@ def remove_file(relative_paths, rm_args) -> None:
     """
     paths = []
     for relative_path in relative_paths:
-        path = NOTE_FOLDER_PATH + relative_path
+        path = os.path.join(NOTE_FOLDER_PATH, relative_path)
         if not os.path.exists(path):
             path += ".txt"
         paths.append(path)
     os.system("rm " + " ".join(paths) + " " + rm_args)
-
 
 def print_usage() -> None:
     """Print the correct usage of the command"""

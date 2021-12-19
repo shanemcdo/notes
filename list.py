@@ -12,7 +12,7 @@ def parse_argv() -> None or "folder_name":
         return ""
     elif length > 1:
         raise(Exception("Too many arguments"))
-    return argv[0]
+    return os.path.normpath(argv[0])
 
 def print_usage() -> None:
     """Print the correct usage of the command"""
@@ -28,7 +28,7 @@ def main():
         print("Error: " + str(e))
         print_usage()
         return
-    os.system('ls ' + NOTE_FOLDER_PATH + "\\" + folder_name)
+    os.system('ls ' + os.path.join(NOTE_FOLDER_PATH, folder_name))
 
 
 if __name__ == "__main__":
