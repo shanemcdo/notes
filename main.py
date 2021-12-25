@@ -63,7 +63,7 @@ def open_file(relative_paths: list, vim_flags: str, n: int) -> None:
         file_path = os.path.join(file_path, file_name)
         file_paths.append(file_path)
     if n != 0:
-        os.system(f'rotne {" ". join(file_paths)} {vim_flags}')
+        os.system(f'rotne {n} {" ". join(file_paths)} {vim_flags}')
     else:
         os.system(f'{EDITOR} {" ". join(file_paths)} {vim_flags}')
 
