@@ -3,7 +3,7 @@
 import os
 import re
 import subprocess
-from sys import argv
+from sys import argv, stderr, stdout
 
 NOTE_FOLDER_PATH = os.path.normpath(os.environ['NOTE_FOLDER'])
 EDITOR = os.environ['EDITOR']
@@ -67,23 +67,24 @@ def open_file(relative_paths: list, vim_flags: str, n: int) -> None:
     else:
         os.system(f'{EDITOR} {" ". join(file_paths)} {vim_flags}')
 
-def print_usage() -> None:
+def print_usage(file=stdout) -> None:
     """Print the correct usage of the command"""
     print(
-            "Usage of command:\n" +
-            "\tnote {relative path(s)} {vim flag(optional)}\n" +
-            "\t\tsee vim --help for info on flags\n" +
-            "\t\tMore flags:\n" +
-            "\t\t\t--rotn - next input is how many spaces rotated"
+        "Usage of command:\n" +
+        "\tnote {relative path(s)} {vim flag(optional)}\n" +
+        "\t\tsee vim --help for info on flags\n" +
+        "\t\tMore flags:\n" +
+        "\t\t\t--rotn - next input is how many spaces rotated",
+        file=file
         )
 
 def main():
     try:
         relative_path, vim_flags, n = parse_argv()
     except Exception as e:
-        print("Error: " + str(e))
-        print_usage()
-        return
+        print("Error: " + str(e), file=stderr)
+        print_usage(stderr)
+        exit(1)
     open_file(relative_path, vim_flags, n)
 
 if __name__ == "__main__":
